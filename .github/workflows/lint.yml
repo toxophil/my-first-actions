@@ -1,0 +1,19 @@
+name: Analyse de code - Prettier
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Analyse du code avec Prettier
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --check .
