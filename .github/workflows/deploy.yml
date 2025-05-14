@@ -1,4 +1,4 @@
-name: Déploiement GitHub Pages
+name: Déployer sur GitHub Pages
 
 on:
   push:
@@ -12,23 +12,30 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout le dépôt
         uses: actions/checkout@v4
 
-      - name: Setup Pages
+      - name: Configurer GitHub Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload site
+      - name: Upload des fichiers
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./public
 
-      - name: Deploy to GitHub Pages
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer vers GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v3
