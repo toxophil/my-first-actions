@@ -8,11 +8,11 @@ on:
 jobs:
   example-job:
     runs-on: ubuntu-latest
+    env:
+      MY_VARIABLE: "This is a variable"  # Variable disponible dans tout le job
 
     steps:
       - name: Afficher la variable d'environnement
-        env:
-          MY_VARIABLE: "This is a variable"
         run: echo "Ma variable dit : $MY_VARIABLE"
 
       - name: Afficher le secret (sera masqué)
