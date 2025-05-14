@@ -1,4 +1,4 @@
-name: Node.js Tests
+name: Multi-Job Workflow
 
 on:
   push:
@@ -10,19 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Récupérer le code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Installer Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Installer les dépendances
+      - name: Install dependencies
         run: npm install
 
-      - name: Donner les droits d'exécution à Jest
+      - name: Fix Jest permission
         run: chmod +x ./node_modules/.bin/jest
 
-      - name: Lancer les tests Jest
+      - name: Run tests
         run: npm test
+
+  second-job:
+    needs: test  # 🔁 Ne s'exécute que si le job "test" réussit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Afficher un message
+        run: echo '✅ Second job running après succès des tests'
