@@ -10,16 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Récupérer le code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: Installer les dépendances
         run: npm install
 
-      - name: Run tests
+      - name: Donner les droits d'exécution à Jest
+        run: chmod +x ./node_modules/.bin/jest
+
+      - name: Lancer les tests Jest
         run: npm test
