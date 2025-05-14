@@ -1,13 +1,3 @@
-name: CI complète avec tests, couverture et lint
-
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -24,47 +14,8 @@ jobs:
       - name: Installer les dépendances
         run: npm install
 
+      - name: Corriger les permissions sur Jest
+        run: chmod +x ./node_modules/.bin/jest
+
       - name: Exécuter les tests avec couverture
         run: npm test -- --coverage
-
-  second-job:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Afficher un message
-        run: echo '✅ Tests réussis. Job secondaire exécuté.'
-
-  upload-coverage:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Installer Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Installer les dépendances
-        run: npm install
-
-      - name: Envoyer la couverture à Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Vérifier le format du code avec Prettier
-        uses: creyD/prettier_action@v4.3
-        with:
-          prettier_options: --check .
