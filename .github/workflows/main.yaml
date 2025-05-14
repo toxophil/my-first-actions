@@ -8,11 +8,12 @@ on:
 jobs:
   example-job:
     runs-on: ubuntu-latest
-    env:
-      MY_VARIABLE: "This is a variable"  # Définition de la variable d'environnement
+
     steps:
       - name: Afficher la variable d'environnement
-        run: echo "Ma variable dit : ${{ env.MY_VARIABLE }}"
+        env:
+          MY_VARIABLE: "This is a variable"
+        run: echo "Ma variable dit : $MY_VARIABLE"
 
       - name: Afficher le secret (sera masqué)
         run: echo "Mon secret est : ${{ secrets.MY_SECRET }}"
