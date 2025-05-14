@@ -1,6 +1,6 @@
 # My First GitHub Actions Project
 
-Ce dépôt contient des workflows d'exemple pour découvrir GitHub Actions :
+Ces dépôt contient des workflows d'exemple pour découvrir GitHub Actions :
 - Tests unitaires avec Jest
 - Jobs multiples
 - Rapport de couverture Codecov
