@@ -1,9 +1,12 @@
-name: Multi-Job Workflow
+name: CI complète avec tests, couverture et lint
 
 on:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -13,18 +16,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: Installer les dépendances
         run: npm install
 
-      - name: Fix Jest permission
-        run: chmod +x ./node_modules/.bin/jest
-
-      - name: Run tests with coverage
+      - name: Exécuter les tests avec couverture
         run: npm test -- --coverage
 
   second-job:
@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Afficher un message
-        run: echo '✅ Second job running après succès des tests'
+        run: echo '✅ Tests réussis. Job secondaire exécuté.'
 
   upload-coverage:
     needs: test
@@ -43,16 +43,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      - name: Installer les dépendances
         run: npm install
 
-      - name: Upload coverage report to Codecov
+      - name: Envoyer la couverture à Codecov
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Vérifier le format du code avec Prettier
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --check .
