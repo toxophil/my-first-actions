@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Fix temporaire : précharger upload-artifact@v3
-      - name: Précharger actions/upload-artifact@v3
-        uses: actions/upload-artifact@v3
+      # ✅ FIX : version explicite de l'action
+      - name: Précharger actions/upload-artifact
+        uses: actions/upload-artifact@v3.1.2
 
       - name: Checkout le dépôt
         uses: actions/checkout@v4
