@@ -1,4 +1,4 @@
-name: My First Workflow
+name: Environment and Secret Example
 
 on:
   push:
@@ -6,8 +6,13 @@ on:
       - main
 
 jobs:
-  say-hello:
+  example-job:
     runs-on: ubuntu-latest
+    env:
+      MY_VARIABLE: "This is a variable"  # Définition de la variable d'environnement
     steps:
-      - name: Say Hello
-        run: echo "Hello, GitHub Actions!"
+      - name: Afficher la variable d'environnement
+        run: echo "Ma variable dit : ${{ env.MY_VARIABLE }}"
+
+      - name: Afficher le secret (sera masqué)
+        run: echo "Mon secret est : ${{ secrets.MY_SECRET }}"
