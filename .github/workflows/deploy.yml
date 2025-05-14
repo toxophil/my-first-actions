@@ -17,7 +17,12 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # Fix temporaire : précharger upload-artifact@v3
+      - name: Précharger actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
+
       - name: Checkout le dépôt
         uses: actions/checkout@v4
 
