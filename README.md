@@ -9,3 +9,4 @@ Ces dépôt contient des workflows d'exemple pour découvrir GitHub Actions :
 ## 🔍 Couverture de code
 
 ![Code coverage](https://codecov.io/gh/toxophil/my-first-actions/branch/main/graph/badge.svg)
+ 
