@@ -1,4 +1,4 @@
-name: Analyse de code - Prettier
+name: Analyse de code avec Prettier
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout du code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Analyse du code avec Prettier
